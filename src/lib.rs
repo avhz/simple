@@ -11,7 +11,7 @@ struct Complex {
 
 impl Complex {
     fn new(re: f64, im: f64) -> Complex {
-        Complex { re: re, im: im }
+        Complex { re, im }
     }
 
     fn i() -> Complex {
@@ -51,6 +51,7 @@ impl Div for Complex {
 
     fn div(self, other: Complex) -> Complex {
         let denom = other.re * other.re + other.im * other.im;
+
         Complex::new(
             (self.re * other.re + self.im * other.im) / denom,
             (self.im * other.re - self.re * other.im) / denom,
