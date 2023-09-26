@@ -4,6 +4,8 @@ mod arithmetic;
 mod polar;
 mod trigonometric;
 
+use crate::polar::*;
+
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub struct Complex<F>
 where
@@ -77,8 +79,11 @@ where
         }
     }
 
-    pub fn polar(&self) -> (F, F) {
-        (self.norm().sqrt(), self.arg())
+    pub fn polar(&self) -> Polar<F> {
+        Polar {
+            r: self.norm().sqrt(),
+            theta: self.arg(),
+        }
     }
 
     pub fn exp(&self) -> Self {
@@ -90,9 +95,9 @@ where
     }
 
     pub fn sqrt(&self) -> Self {
-        let (r, theta) = self.polar();
+        let polar = self.polar();
 
-        Self::from_polar(r.sqrt(), theta / F::from(2).unwrap())
+        Self::from_polar(polar.r.sqrt(), polar.theta / F::from(2).unwrap())
     }
 
     pub fn sin(&self) -> Self {
